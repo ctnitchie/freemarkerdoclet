@@ -29,6 +29,7 @@ import freemarker.template.Template;
 
 /**
  * The main Doclet implementation.
+ * 
  * @author chris.nitchie
  */
 public class FreemarkerDoclet {
@@ -45,7 +46,7 @@ public class FreemarkerDoclet {
 
         String rootTemplate = getOption(root, ROOT_TEMPLATE, null);
         if (rootTemplate == null) {
-            throw new Exception("Root template not specified.");
+            throw new Exception("-" + ROOT_TEMPLATE + " not specified.");
         }
         File rootFile = new File(rootTemplate);
         if (!rootFile.isFile()) {
@@ -61,13 +62,12 @@ public class FreemarkerDoclet {
         if (outputFile != null) {
             out = new FileWriter(outputFile);
         } else {
-            throw new Exception("Output file not specified.");
+            throw new Exception("-" + OUTPUT_FILE + " not specified.");
         }
 
         try {
-            config.setSharedVariable("file",
-                    new FileDirective(new File(outputFile).getParentFile(),
-                            outEncoding));
+            config.setSharedVariable("file", new FileDirective(new File(
+                    outputFile).getParentFile(), outEncoding));
             config.setSharedVariable("wellFormed", new WellFormedDirective());
             config.setSharedVariable("resolveComment",
                     new ResolveCommentDirective(root));
@@ -83,12 +83,16 @@ public class FreemarkerDoclet {
         return true;
     }
 
-    private static String getOption(RootDoc doc, String name, String dflt) {
+    private static String getOption(RootDoc root, String name, String dflt) {
+        return getOption(root.options(), name, dflt);
+    }
+
+    private static String getOption(String[][] options, String name, String dflt) {
         name = "-" + name;
-        for (int i = 0; i < doc.options().length; i++) {
-            if (doc.options()[i][0].equals(name)) {
-                if (doc.options()[i].length > 1) {
-                    return doc.options()[i][1];
+        for (int i = 0; i < options.length; i++) {
+            if (options[i][0].equals(name)) {
+                if (options[i].length > 1) {
+                    return options[i][1];
                 } else {
                     return dflt;
                 }
@@ -112,6 +116,15 @@ public class FreemarkerDoclet {
 
     public static boolean validOptions(String[][] options,
             DocErrorReporter reporter) {
-        return true;
+        boolean ok = true;
+        if (getOption(options, ROOT_TEMPLATE, null) == null) {
+            reporter.printError("No -" + ROOT_TEMPLATE + " specified.");
+            ok = false;
+        }
+        if (getOption(options, OUTPUT_FILE, null) == null) {
+            reporter.printError("No -" + OUTPUT_FILE + " specified.");
+            ok = false;
+        }
+        return ok;
     }
 }
