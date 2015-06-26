@@ -14,6 +14,12 @@ Execute the doclet in the normal way:
             -outputFile path/to/outputFile.html \
             [other arguments]
 
+Alternatively, you can invoke the doclet using the `javadoc-ftl` command-line utilities in the `bin` directory, which can be added to your `PATH` environment variable. These automatically set `-doclet` and `-docletpath` for you.
+
+    javadoc-ftl -template path/to/template.ftl \
+                -outputFile path/to/outputFile.html \
+                [other arguments]
+
 Within the template, build the output documentation.
 
     <!DOCTYPE html>
