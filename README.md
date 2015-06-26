@@ -41,6 +41,10 @@ Helper Directives
 
 The doclet provides a number of helper directives to facilitate output generation.
 
+The `@echo` directive allows you to output messages to the console during output generation.
+
+    <@echo message="Hey there!"/>
+
 The `@file` directive wraps content in your template to be written to an alternative location. Specify the location of the output file, relative to the primary output file passed via `-outputFile`, using the `location` attribute. You can also specify the `encoding` of the output file.
 
     <#list root.classes() as class>

@@ -71,6 +71,8 @@ public class FreemarkerDoclet {
             config.setSharedVariable("wellFormed", new WellFormedDirective());
             config.setSharedVariable("resolveComment",
                     new ResolveCommentDirective(root));
+            config.setSharedVariable("echo", new EchoDirective());
+            
             Template template = config.getTemplate(rootFile.getName());
             Map<String, Object> model = new HashMap<>();
             model.put("root", root);
