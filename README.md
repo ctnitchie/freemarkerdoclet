@@ -54,7 +54,7 @@ The `@echo` directive allows you to output messages to the console during output
 The `@file` directive wraps content in your template to be written to an alternative location. Specify the location of the output file, relative to the primary output file passed via `-outputFile`, using the `location` attribute. You can also specify the `encoding` of the output file.
 
     <#list root.classes() as class>
-      <@file locatoin=class.name() + ".html" encoding="UTF-8">
+      <@file location=class.name() + ".html" encoding="UTF-8">
         <h1>${class.name()?html} Documentation!!!!</h1>
         <ul>
         <#list class.methods() as method>
