@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.sun.javadoc.DocErrorReporter;
+import com.sun.javadoc.LanguageVersion;
 import com.sun.javadoc.RootDoc;
 
 import freemarker.template.Configuration;
@@ -128,5 +129,19 @@ public class FreemarkerDoclet {
             ok = false;
         }
         return ok;
+    }
+    
+    /**
+     * NOTE: Without this method present and returning LanguageVersion.JAVA_1_5,
+     * Javadoc will not process generics because it assumes
+     * LanguageVersion.JAVA_1_1
+     * 
+     * @return language version (hard coded to LanguageVersion.JAVA_1_5)
+     * @see <a
+     *      href="http://stackoverflow.com/questions/5731619/doclet-get-generics-of-a-list">Credit</a>
+     * 
+     */
+    public static LanguageVersion languageVersion() {
+        return LanguageVersion.JAVA_1_5;
     }
 }
