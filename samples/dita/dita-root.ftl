@@ -21,6 +21,7 @@
     </@file>
     <#list package.allClasses(true) as class>
       <topicref href="topics/${(class.name() + '.dita')?url_path}" navtitle="${class.name()?xml}" keys="${class.qualifiedName()?xml}"/>
+      <@echo message="Generating " + class.name() + ".dita"/>
       <@file location="topics/" + class.name() + ".dita">
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA 1.2 Concept//EN" "concept.dtd">
